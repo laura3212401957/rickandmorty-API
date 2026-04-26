@@ -18,8 +18,11 @@ function Home() {
     const [filtro, setFiltro] = useState<FiltroTipo>('personajes')
     const [busqueda, setBusqueda] = useState('')
 
-    const filtros: FiltroTipo[] = ['personajes', 'vivos', 'muertos', 'humanos', 'aliens']
+    const [favoritos, setFavoritos] = useState<number[]>(() => {
+        return JSON.parse(localStorage.getItem("favoritos") || "[]");
+    });
 
+    const filtros: FiltroTipo[] = ['personajes', 'vivos', 'muertos', 'humanos', 'aliens']
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,6 +50,15 @@ function Home() {
     }
     fetchData()
     }, [])
+
+    const toggleFavorito = (id: number) => {
+    const nuevos = favoritos.includes(id)
+        ? favoritos.filter((f) => f !== id)
+        : [...favoritos, id];
+    setFavoritos(nuevos);
+    localStorage.setItem("favoritos", JSON.stringify(nuevos));
+    console.log("favoritos guardados:", nuevos); // ← agrega esto
+};
 
     function cambiarFiltro(nuevoFiltro: FiltroTipo) {
         setFiltro(nuevoFiltro)
@@ -116,6 +128,11 @@ function Home() {
                 <td>{personaje.species}</td>
                 <td>{personaje.status}</td>
                 <td>{personaje.origin.name}</td>
+                <td>
+                  <button onClick={() => toggleFavorito(personaje.id)}>
+                    {favoritos.includes(personaje.id) ? "❤️" : "🤍"}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

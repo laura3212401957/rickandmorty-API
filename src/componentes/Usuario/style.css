@@ -1,0 +1,86 @@
+body {
+  background-color: #0a0a1a;
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #39ff14;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filtros button {
+  background-color: transparent;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.filtros button:hover {
+  background-color: #39ff1420;
+}
+
+.filtros button.activo {
+  background-color: #39ff14;
+  color: #0a0a1a;
+  font-weight: bold;
+}
+
+.tabla-container {
+  background-color: #111128;
+  border: 1px solid #1e1e4a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabla-posiciones {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-posiciones thead tr {
+  background-color: #1a1a3a;
+}
+
+.tabla-posiciones th {
+  padding: 12px 16px;
+  text-align: left;
+  color: #39ff14;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #1e1e4a;
+}
+
+.tabla-posiciones td {
+  padding: 11px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid #1a1a3a;
+  color: #ccc;
+}
+
+.tabla-posiciones tbody tr:hover {
+  background-color: #1a1a3a;
+}
+
+.fila-expandida td {
+  background-color: #0d1a0d;
+  color: #39ff14;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #1e1e4a;
+}
