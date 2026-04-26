@@ -1,7 +1,6 @@
 import { useState } from "react"
 import "./style.css"
 
-// Cada pregunta tiene su texto, las opciones y cuál es la correcta
 interface Pregunta {
   pregunta: string
   opciones: string[]
@@ -55,7 +54,6 @@ function Original() {
   const preguntaActual = preguntas[indice]
 
   function elegirOpcion(opcion: string) {
-    // No dejamos cambiar la respuesta una vez que eligió
     if (seleccionada) return
     setSeleccionada(opcion)
   }
@@ -73,7 +71,6 @@ function Original() {
     }
   }
 
-  // Contamos cuántas respondió bien
   const aciertos = respuestas.filter(
     (r, i) => r === preguntas[i].correcta
   ).length
@@ -85,7 +82,6 @@ function Original() {
     setTerminada(false)
   }
 
-  // Mensaje final según cuántas acertó
   function mensajeFinal() {
     if (aciertos === preguntas.length) return "Eres un verdadero fan de Rick and Morty 🧪"
     if (aciertos >= 5) return "Casi perfecto, sabes bastante de la serie"
@@ -133,7 +129,6 @@ function Original() {
           })}
         </div>
 
-        {/* El botón de siguiente solo aparece después de elegir */}
         {seleccionada && (
           <button className="btn-siguiente" onClick={siguientePregunta}>
             {indice + 1 === preguntas.length ? "Ver resultado" : "Siguiente"}

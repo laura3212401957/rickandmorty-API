@@ -1,103 +1,35 @@
-
-body {
-  background-color: #0a0a1a;
-  color: #e0e0e0;
-  font-family: 'Courier New', monospace;
-  margin: 0;
-  padding: 20px;
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
 }
 
-.filtros {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
+.modal {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    text-align: center;
 }
 
-.filtros button {
-  background-color: transparent;
-  border: 2px solid #39ff14;
-  color: #39ff14;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-  font-size: 13px;
-  transition: background-color 0.2s;
+.modal img {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
 }
 
-.filtros button:hover {
-  background-color: #39ff1420;
-}
-
-.filtros button.activo {
-  background-color: #39ff14;
-  color: #0a0a1a;
-  font-weight: bold;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px 14px;
-  background-color: #111128;
-  border: 1px solid #39ff14;
-  border-radius: 8px;
-  color: #e0e0e0;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  margin-bottom: 20px;
-  outline: none;
-}
-
-input[type="text"]::placeholder {
-  color: #555;
-}
-
-.tabla-container {
-  background-color: #111128;
-  border: 1px solid #1e1e4a;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.tabla-container h2 {
-  padding: 16px 20px;
-  color: #39ff14;
-  font-size: 16px;
-  border-bottom: 1px solid #1e1e4a;
-  margin: 0;
-}
-
-.tabla-posiciones {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.tabla-posiciones thead tr {
-  background-color: #1a1a3a;
-}
-
-.tabla-posiciones th {
-  padding: 12px 16px;
-  text-align: left;
-  color: #39ff14;
-  font-size: 13px;
-  font-weight: bold;
-  border-bottom: 1px solid #1e1e4a;
-}
-
-.tabla-posiciones td {
-  padding: 11px 16px;
-  font-size: 13px;
-  border-bottom: 1px solid #1a1a3a;
-  color: #ccc;
-}
-
-.tabla-posiciones tbody tr:hover {
-  background-color: #1a1a3a;
-}
-
-.tabla-posiciones tbody tr.resaltado td {
-  background-color: #003300;
-  color: #39ff14;
+.modal-cerrar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
 }

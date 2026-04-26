@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import "./style.css"
 
-//datos que nos devuelve cada endpoint de la API
 interface ConteoRecurso {
  info: {
     count: number
@@ -17,7 +16,7 @@ function Informativa() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Pedimos los tres recursos al mismo tiempo para no esperar uno por uno
+   
         const [resPersonajes, resEpisodios, resLocaciones] = await Promise.all([
           fetch("https://rickandmortyapi.com/api/character"),
           fetch("https://rickandmortyapi.com/api/episode"),
@@ -53,9 +52,9 @@ function Informativa() {
         caótico, y su nieto Morty a través de diferentes universos y dimensiones.
       </p>
 
+      <img src="./src/assets/rickandmorty.png"></img>
       <h2>Datos de la serie</h2>
 
-      {/* Estos números vienen directamente de la API, no son inventados */}
       <div className="stats-grid">
         <div className="stat-card">
           <span className="stat-numero">{totalPersonajes}</span>

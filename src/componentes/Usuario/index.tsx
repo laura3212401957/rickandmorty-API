@@ -4,8 +4,8 @@ import "./style.css"
 interface Episodio {
   id: number
   name: string
-  episode: string   // viene como "S01E01"
-  characters: string[]  // array de urls, usamos .length para contar
+  episode: string   
+  characters: string[] 
 }
 
 function Usuario() {
@@ -15,7 +15,6 @@ function Usuario() {
 
   const temporadas = ["S01", "S02", "S03", "S04", "S05"]
 
-  // Traemos todos los episodios de todas las páginas, igual que hicimos en Home
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,12 +40,10 @@ function Usuario() {
     fetchData()
   }, [])
 
-  // Filtramos los episodios según la temporada activa
   const episodiosFiltrados = episodios.filter((ep) =>
     ep.episode.startsWith(temporada)
   )
 
-  // Si hacemos clic en el mismo episodio lo cerramos, si no lo abrimos
   function toggleEpisodio(id: number) {
     setExpandido(expandido === id ? null : id)
   }
@@ -55,7 +52,6 @@ function Usuario() {
     <div>
       <h1>Episodios</h1>
 
-      {/* Botones de temporada, misma lógica de filtros que en Home */}
       <div className="filtros">
         {temporadas.map((t) => (
           <button
@@ -89,7 +85,6 @@ function Usuario() {
                   <td>{expandido === ep.id ? "▲" : "▼"}</td>
                 </tr>
 
-                {/* Fila extra que aparece al hacer clic, sin necesidad de otro fetch */}
                 {expandido === ep.id && (
                   <tr key={`detalle-${ep.id}`} className="fila-expandida">
                     <td colSpan={3}>

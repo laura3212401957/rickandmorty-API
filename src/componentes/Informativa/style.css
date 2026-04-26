@@ -1,7 +1,7 @@
 body {
   background-color: #0a0a1a;
   color: #e0e0e0;
-  font-family: 'Courier New', monospace;
+  font-family: 'Orbitron', sans-serif;
   margin: 0;
   padding: 20px;
 }
@@ -28,6 +28,15 @@ p {
   line-height: 1.7;
   font-size: 14px;
   margin-bottom: 12px;
+}
+.informativa-container img {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 24px auto;
+  border-radius: 16px;
+  border: 2px solid #39ff14;
+  box-shadow: 0 0 20px #39ff1460;
 }
 
 .stats-grid {
