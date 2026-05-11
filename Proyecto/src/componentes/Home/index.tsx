@@ -108,7 +108,7 @@ function Home() {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
+                            <th>Nombres</th>
                             <th>Especie</th>
                             <th>Estado</th>
                             <th>Origen</th>
