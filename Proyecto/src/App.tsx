@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes, Link} from 'react-router';
+import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import Home from './componentes/Home'
 import Favorito from './componentes/Favorito'
 import Original from './componentes/Original'
