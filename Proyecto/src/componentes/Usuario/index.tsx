@@ -1,101 +1,90 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "firebase/auth"
+import { auth } from "../firebaseConfig"
+import { useAuth } from "../AuthContexto"
 import "./style.css"
 
-interface Episodio {
-  id: number
-  name: string
-  episode: string   
-  characters: string[] 
-}
-
 function Usuario() {
-  const [episodios, setEpisodios] = useState<Episodio[]>([])
-  const [temporada, setTemporada] = useState("S01")
-  const [expandido, setExpandido] = useState<number | null>(null)
+  const { usuario } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [esRegistro, setEsRegistro] = useState(false)
+  const [error, setError] = useState('')
 
-  const temporadas = ["S01", "S02", "S03", "S04", "S05"]
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("https://rickandmortyapi.com/api/episode")
-        const data = await res.json()
-        const totalPaginas = data.info.pages
-
-        const peticiones = []
-        for (let i = 1; i <= totalPaginas; i++) {
-          peticiones.push(
-            fetch(`https://rickandmortyapi.com/api/episode?page=${i}`).then(r => r.json())
-          )
-        }
-
-        const resultados = await Promise.all(peticiones)
-        const todos = resultados.flatMap(r => r.results)
-        setEpisodios(todos)
-      } catch (error) {
-        console.error("Error cargando episodios:", error)
+  async function handleSubmit() {
+    setError('')
+    try {
+      if (esRegistro) {
+        await createUserWithEmailAndPassword(auth, email, password)
+      } else {
+        await signInWithEmailAndPassword(auth, email, password)
       }
+    } catch (err: any) {
+      if (err.code === 'auth/email-already-in-use') setError('Ese correo ya está registrado')
+      else if (err.code === 'auth/wrong-password') setError('Contraseña incorrecta')
+      else if (err.code === 'auth/user-not-found') setError('No existe una cuenta con ese correo')
+      else if (err.code === 'auth/weak-password') setError('La contraseña debe tener mínimo 6 caracteres')
+      else setError('Ocurrió un error, intenta de nuevo')
     }
-
-    fetchData()
-  }, [])
-
-  const episodiosFiltrados = episodios.filter((ep) =>
-    ep.episode.startsWith(temporada)
-  )
-
-  function toggleEpisodio(id: number) {
-    setExpandido(expandido === id ? null : id)
   }
 
-  return (
-    <div>
-      <h1>Episodios</h1>
+  async function handleLogout() {
+    await signOut(auth)
+  }
 
-      <div className="filtros">
-        {temporadas.map((t) => (
-          <button
-            key={t}
-            onClick={() => {
-              setTemporada(t)
-              setExpandido(null)
-            }}
-            className={temporada === t ? "activo" : ""}
-          >
-            {t}
+
+  // Si hay usuario logueado mostramos su perfil
+  if (usuario) {
+    return (
+      <div className="usuario-container">
+        <div className="perfil-card">
+          <div className="icono-estado">🟢</div>
+          <h2>Bienvenid@</h2>
+          <p className="usuario-email">{usuario.email}</p>
+          <button className="btn-logout" onClick={handleLogout}>
+            Cerrar sesión
           </button>
-        ))}
+        </div>
       </div>
+    )
+  }
 
-      <div className="tabla-container">
-        <table className="tabla-posiciones">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Nombre</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {episodiosFiltrados.map((ep) => (
-              <>
-                <tr key={ep.id} onClick={() => toggleEpisodio(ep.id)} style={{ cursor: "pointer" }}>
-                  <td>{ep.episode}</td>
-                  <td>{ep.name}</td>
-                  <td>{expandido === ep.id ? "▲" : "▼"}</td>
-                </tr>
+  // Si no hay usuario mostramos el formulario sin icono
+  return (
+    <div className="usuario-container">
+      <div className="form-card">
+        <h2>{esRegistro ? 'Crear Cuenta' : 'Iniciar Sesión'}</h2>
 
-                {expandido === ep.id && (
-                  <tr key={`detalle-${ep.id}`} className="fila-expandida">
-                    <td colSpan={3}>
-                      Personajes en este episodio: <strong>{ep.characters.length}</strong>
-                    </td>
-                  </tr>
-                )}
-              </>
-            ))}
-          </tbody>
-        </table>
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {error && <p className="error-mensaje">{error}</p>}
+
+        <button className="btn-principal" onClick={handleSubmit}>
+          {esRegistro ? 'Registrarse' : 'Entrar'}
+        </button>
+
+        <p className="cambiar-modo">
+          {esRegistro ? '¿Ya tienes cuenta?' : '¿No tienes cuenta?'}
+          <span onClick={() => { setEsRegistro(!esRegistro); setError('') }}>
+            {esRegistro ? ' Inicia sesión' : ' Regístrate'}
+          </span>
+        </p>
       </div>
     </div>
   )

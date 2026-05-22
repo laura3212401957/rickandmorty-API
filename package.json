@@ -4,5 +4,8 @@
   },
   "dependencies": {
     "react-router-dom": "^7.15.1"
+  },
+  "Dependencies":{
+    "firebase": "^12.5.0"
   }
 }
