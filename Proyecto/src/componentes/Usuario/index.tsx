@@ -14,6 +14,7 @@ function Usuario() {
   const [password, setPassword] = useState('')
   const [esRegistro, setEsRegistro] = useState(false)
   const [error, setError] = useState('')
+  const [cerroSesion, setCerroSesion] = useState(false)  
 
   async function handleSubmit() {
     setError('')
@@ -23,6 +24,7 @@ function Usuario() {
       } else {
         await signInWithEmailAndPassword(auth, email, password)
       }
+      setCerroSesion(false)
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') setError('Ese correo ya está registrado')
       else if (err.code === 'auth/wrong-password') setError('Contraseña incorrecta')
@@ -34,16 +36,15 @@ function Usuario() {
 
   async function handleLogout() {
     await signOut(auth)
+    setCerroSesion(true)  
   }
 
-
-  // Si hay usuario logueado mostramos su perfil
   if (usuario) {
     return (
       <div className="usuario-container">
         <div className="perfil-card">
-          <div className="icono-estado">🟢</div>
-          <h2>Bienvenid@</h2>
+          <div className="icono-estado conectado">🟢</div>
+          <h2>Bienvenido</h2>
           <p className="usuario-email">{usuario.email}</p>
           <button className="btn-logout" onClick={handleLogout}>
             Cerrar sesión
@@ -53,11 +54,11 @@ function Usuario() {
     )
   }
 
-  // Si no hay usuario mostramos el formulario sin icono
   return (
     <div className="usuario-container">
       <div className="form-card">
-        <h2>{esRegistro ? 'Crear Cuenta' : 'Iniciar Sesión'}</h2>
+        {cerroSesion && <div className="icono-estado desconectado">🔴</div>}
+        <h2>{esRegistro ? 'Crear cuenta' : 'Iniciar sesión'}</h2>
 
         <input
           type="email"
