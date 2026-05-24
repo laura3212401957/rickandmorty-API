@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import "./style.css"
+import rickAndMortyImg from "../../assets/rickandmorty.png"
 
 interface ConteoRecurso {
- info: {
+  info: {
     count: number
- }
+  }
 }
 
 function Informativa() {
@@ -16,7 +17,6 @@ function Informativa() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-   
         const [resPersonajes, resEpisodios, resLocaciones] = await Promise.all([
           fetch("https://rickandmortyapi.com/api/character"),
           fetch("https://rickandmortyapi.com/api/episode"),
@@ -52,7 +52,8 @@ function Informativa() {
         caótico, y su nieto Morty a través de diferentes universos y dimensiones.
       </p>
 
-      <img src="./src/assets/rickandmorty.png"></img>
+      <img src={rickAndMortyImg} alt="Rick and Morty" />  {/* 👈 reemplazada aquí */}
+
       <h2>Datos de la serie</h2>
 
       <div className="stats-grid">
